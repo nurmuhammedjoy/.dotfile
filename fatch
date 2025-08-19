@@ -1,0 +1,46 @@
+#!/bin/bash
+
+IMAGE_PATH="$HOME/file.png"
+
+# Gruvbox
+fg="\033[38;2;235;219;178m"
+yellow="\033[38;2;250;189;47m"
+reset="\033[0m"
+
+info_lines=(
+    "${yellow}${reset}  ${fg}${reset}"
+    "${yellow}OS${reset}  ${fg}Android 13${reset}"
+    "${yellow}KER${reset} ${fg}Linux 4.14.18${reset}"
+    "${yellow}PKG${reset} ${fg}425 (dpkg)${reset}"
+    "${yellow}SH${reset}  ${fg}zsh${reset}"
+    "${yellow}WM${reset}  ${fg}i3wm${reset}"
+)
+
+PADDING=9
+
+show_image() {
+    if [[ -f "$IMAGE_PATH" ]]; then
+        # Place image and move cursor to align with text
+        kitty +kitten icat --transfer-mode file --place 11x11@0x0 "$IMAGE_PATH"
+    fi
+}
+
+show_info() {
+    # Move cursor to position next to image
+    printf "\033[1;14H"  # Move to row 1, column 17
+    
+    for line in "${info_lines[@]}"; do
+        printf "%b\n\033[14G" "$line"  # Print line then move to column 17
+    done
+}
+
+main() {
+    clear
+    
+    show_image
+    show_info
+
+    echo
+}
+
+main

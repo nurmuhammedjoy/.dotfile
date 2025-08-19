@@ -1,0 +1,36 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<channel name="xfce4-terminal" version="1.0">
+  <property name="background-mode" type="string" value="TERMINAL_BACKGROUND_TRANSPARENT"/>
+  <property name="background-darkness" type="double" value="0.94999999999999996"/>
+  <property name="misc-show-unsafe-paste-dialog" type="bool" value="false"/>
+  <property name="misc-borders-default" type="bool" value="false"/>
+  <property name="misc-menubar-default" type="bool" value="false"/>
+  <property name="font-use-system" type="bool" value="false"/>
+  <property name="shortcuts-no-mnemonics" type="bool" value="false"/>
+  <property name="misc-middle-click-opens-uri" type="bool" value="true"/>
+  <property name="misc-mouse-autohide" type="bool" value="true"/>
+  <property name="misc-bell-urgent" type="bool" value="true"/>
+  <property name="misc-right-click-action" type="string" value="TERMINAL_RIGHT_CLICK_ACTION_CONTEXT_MENU"/>
+  <property name="binding-backspace" type="string" value="TERMINAL_ERASE_BINDING_AUTO"/>
+  <property name="color-foreground" type="string" value="#f6f6f5f5f4f4"/>
+  <property name="color-background" type="string" value="#206d206d206d"/>
+  <property name="color-background-vary" type="bool" value="false"/>
+  <property name="color-cursor-foreground" type="string" value=""/>
+  <property name="color-cursor" type="string" value=""/>
+  <property name="color-cursor-use-default" type="bool" value="true"/>
+  <property name="color-selection" type="string" value=""/>
+  <property name="color-selection-background" type="string" value=""/>
+  <property name="color-selection-use-default" type="bool" value="true"/>
+  <property name="color-bold" type="string" value=""/>
+  <property name="color-bold-use-default" type="bool" value="true"/>
+  <property name="color-palette" type="string" value="rgb(154,153,150);rgb(229,165,10);rgb(52,101,164);rgb(52,101,164);rgb(53,132,228);rgb(117,80,123);rgb(6,152,154);rgb(28,113,216);rgb(85,87,83);rgb(239,41,41);rgb(138,226,52);rgb(252,233,79);rgb(154,153,150);rgb(173,127,168);rgb(52,226,226);rgb(154,153,150)"/>
+  <property name="color-bold-is-bright" type="bool" value="true"/>
+  <property name="color-use-theme" type="bool" value="true"/>
+  <property name="tab-activity-color" type="string" value="#aa0000"/>
+  <property name="font-allow-bold" type="bool" value="false"/>
+  <property name="font-name" type="string" value="Hack Nerd Font Mono 12"/>
+  <property name="scrolling-on-keystroke" type="bool" value="true"/>
+  <property name="scrolling-bar" type="string" value="TERMINAL_SCROLLBAR_NONE"/>
+  <property name="misc-cursor-shape" type="string" value="TERMINAL_CURSOR_SHAPE_IBEAM"/>
+</channel>

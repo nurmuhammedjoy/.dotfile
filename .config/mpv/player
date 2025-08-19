@@ -1,0 +1,98 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+MUSIC_DIR="$HOME/music"
+PLAYLIST="$HOME/.config/mpv/playlist.txt"
+NOW_PLAYING="$HOME/.config/mpv/now_playing.txt"
+MPV_PID_FILE="$HOME/.config/mpv/mpv.pid"
+
+CMD=$1
+shift
+
+# Function to play a track
+play_file() {
+    TRACK="$1"
+    echo "$TRACK" > "$NOW_PLAYING"
+
+    # Kill only mpv started by this script
+    if [[ -f "$MPV_PID_FILE" ]]; then
+        PID=$(cat "$MPV_PID_FILE")
+        kill "$PID" 2>/dev/null
+    fi
+
+    mpv --no-video "$TRACK" &
+    echo $! > "$MPV_PID_FILE"
+}
+
+# Play current track or first track if none
+if [[ "$CMD" == "play" ]]; then
+    if [[ -f "$NOW_PLAYING" ]]; then
+        TRACK=$(cat "$NOW_PLAYING")
+        play_file "$TRACK"
+    else
+        TRACK=$(head -n 1 "$PLAYLIST")
+        play_file "$TRACK"
+    fi
+fi
+
+# Pause/Resume toggle
+if [[ "$CMD" == "pause" ]]; then
+    if [[ -f "$MPV_PID_FILE" ]]; then
+        PID=$(cat "$MPV_PID_FILE")
+        if kill -0 "$PID" 2>/dev/null; then
+            STATUS=$(ps -o state= -p "$PID" | tr -d ' ')
+            if [[ "$STATUS" == "T" ]]; then
+                kill -SIGCONT "$PID"
+            else
+                kill -SIGSTOP "$PID"
+            fi
+        fi
+    fi
+fi
+
+# Stop playback
+if [[ "$CMD" == "stop" ]]; then
+    if [[ -f "$MPV_PID_FILE" ]]; then
+        kill "$(cat "$MPV_PID_FILE")" 2>/dev/null
+        rm -f "$MPV_PID_FILE"
+    fi
+    rm -f "$NOW_PLAYING"
+fi
+
+# Play next track
+if [[ "$CMD" == "next" ]]; then
+    CURRENT=$(cat "$NOW_PLAYING")
+    NEXT=$(grep -F -A1 "$CURRENT" "$PLAYLIST" | tail -n1)
+    if [[ -z "$NEXT" ]]; then
+        NEXT=$(head -n1 "$PLAYLIST")  # loop
+    fi
+    play_file "$NEXT"
+fi
+
+# Play previous track
+if [[ "$CMD" == "prev" ]]; then
+    CURRENT=$(cat "$NOW_PLAYING")
+    PREV=$(grep -F -B1 "$CURRENT" "$PLAYLIST" | head -n1)
+    if [[ -z "$PREV" ]]; then
+        PREV=$(tail -n1 "$PLAYLIST")  # loop
+    fi
+    play_file "$PREV"
+fi
+
+
+if [[ "$CMD" == "add" ]]; then
+    for f in "$@"; do
+        if [[ -f "$f" ]]; then
+            echo "$f" >> "$PLAYLIST"
+        fi
+    done
+fi
+
+if [[ "$CMD" == "current" ]]; then
+    if [[ -f "$NOW_PLAYING" ]]; then
+        FILE="$(basename "$(cat "$NOW_PLAYING")")"
+        NAME="${FILE%.*}"  
+        echo "  $NAME"
+    else
+        echo "  Stopped"
+    fi
+fi

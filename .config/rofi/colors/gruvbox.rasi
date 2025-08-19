@@ -1,0 +1,9 @@
+* {
+    background:     #282828FF;   /* dark background */
+    background-alt: #3c3836FF;   /* slightly lighter alternative */
+    foreground:     #EBDBB2FF;   /* light foreground */
+    selected:       #EBDDD2;   /* highlight for selected item */
+    active:         #FE8019FF;   /* active item */
+    urgent:         #FB4934FF;   /* urgent item */
+    border:         #928374FF;   /* optional border color */
+}

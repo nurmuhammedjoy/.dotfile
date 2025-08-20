@@ -17,6 +17,8 @@ This key is used in combination with other keys to perform actions.
 
 ```Alt+Return``` → Open Kitty terminal.
 
+![Preview](preview/1.png)
+
 ```Alt+e``` → Open Thunar file manager.
 
 ```Alt+Space``` → Launch Rofi application menu.

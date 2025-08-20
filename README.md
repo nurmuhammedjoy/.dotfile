@@ -2,17 +2,37 @@
 
 > *Configuration files (.dotfiles) for Linux and Termux*
 
+<div align="center">
+
 A carefully crafted collection of configuration files featuring window manager, terminal, themes, polybar with custom modules for Termux and music player integration.
 
 ![Preview](preview/1.png)
 
+</div>
+
 ---
+
+## 📦 Installation
+
+### Required Packages for Termux
+
+Before using these dotfiles on Termux, install the required packages:
+
+```bash
+pkg update && pkg upgrade
+pkg install apt bash coreutils dpkg dash file findutils gpgv grep less ncurses ncurses-utils net-tools openssl procps sed tar termux-tools termux-core tzdata util-linux wget which zsh
+termux-api
+ ```
 
 ## 📖 Configuration Documentation
 
 ### 🎯 Modifier Key
 
+<div align="center">
+
 The `$mod` key is configured as **Mod1** (Alt key)
+
+</div>
 
 > **Note:** This key serves as the primary modifier for all window management operations and shortcuts.
 
@@ -22,34 +42,56 @@ The `$mod` key is configured as **Mod1** (Alt key)
 
 ### Core Applications
 
+<div style="overflow-x: auto;">
+
 | Shortcut | Action | Description |
 |----------|--------|-------------|
 | `Alt+Return` | Open Kitty terminal | Launch your primary terminal emulator |
 | `Alt+e` | Open Thunar file manager | Access your file system with ease |
 | `Alt+Space` | Launch Rofi application menu | Quick application launcher |
 
+</div>
+
+<div align="center">
+
 ![Preview](preview/1.png)
 
+</div>
+
 ### Media Controls
+
+<div style="overflow-x: auto;">
 
 | Shortcut | Action | Preview |
 |----------|--------|---------|
 | `Alt+c` | Run MPV control menu | ![Preview](preview/2.png) |
 | `Alt+x` | Run MPV select music | ![Preview](preview/3.png) |
 
+</div>
+
 ### Window Management
+
+<div style="overflow-x: auto;">
 
 | Shortcut | Action |
 |----------|--------|
 | `Alt+q` | Close focused window |
 
+</div>
+
 ---
 
 ## 🧭 Window Focus
 
+<div align="center">
+
 Navigate between windows with intuitive key combinations:
 
+</div>
+
 ### Directional Movement
+
+<div style="overflow-x: auto;">
 
 | Direction | Primary Shortcut | Alternative |
 |-----------|------------------|-------------|
@@ -58,11 +100,17 @@ Navigate between windows with intuitive key combinations:
 | **Up** | `Alt+l` | `Alt+Up` |
 | **Right** | `Alt+;` | `Alt+Right` |
 
+</div>
+
 ---
 
 ## 🎨 Layouts and Splits
 
+<div align="center">
+
 Master your workspace organization:
+
+</div>
 
 ### Window Splitting
 - `Alt+h` → **Split window horizontally**
@@ -82,15 +130,20 @@ Master your workspace organization:
 
 ## ⚙️ Reload & Restart i3
 
+<div align="center">
+
 Keep your configuration up-to-date:
+
+</div>
+
+<div style="overflow-x: auto;">
 
 | Shortcut | Action | Purpose |
 |----------|--------|---------|
 | `Alt+Shift+z` | Reload i3 configuration | Apply changes without restart |
 | `Alt+Shift+r` | Restart i3 | Full restart without logging out |
 
----
+</div>
 
-*Crafted with ❤️ for productivity and aesthetics*
-```Alt+a``` → Focus parent container in layout hierarchy.
+---
 

@@ -1,66 +1,97 @@
-# My Dotfiles
+# 🔧 My Dotfiles
 
-This repository contains my configuration files (.dotfiles) for Linux and Termux.  
-It includes window manager, terminal, themes, polybar with custom modules for Termux and music player.
+> *Configuration files (.dotfiles) for Linux and Termux*
 
-![Preview](preview/1.png)
-
-# Configuration Documentation
-
-### Modifier Key
-
-``$mod`` is set to ***Mod1***, usually the Alt key.
-
-This key is used in combination with other keys to perform actions.
-
-### Application Shortcuts
-
-```Alt+Return``` → Open Kitty terminal.
+A carefully crafted collection of configuration files featuring window manager, terminal, themes, polybar with custom modules for Termux and music player integration.
 
 ![Preview](preview/1.png)
 
-```Alt+e``` → Open Thunar file manager.
+---
 
-```Alt+Space``` → Launch Rofi application menu.
+## 📖 Configuration Documentation
 
-```Alt+c``` → Run MPV control menu.
+### 🎯 Modifier Key
 
-![Preview](preview/2.png)
+The `$mod` key is configured as **Mod1** (Alt key)
 
-```Alt+x``` → Run MPV select music.
+> **Note:** This key serves as the primary modifier for all window management operations and shortcuts.
 
-![Preview](preview/3.png)
+---
 
-```Alt+q``` → Close focused window.
+## 🚀 Application Shortcuts
 
+### Core Applications
 
-### Window Focus
+| Shortcut | Action | Description |
+|----------|--------|-------------|
+| `Alt+Return` | Open Kitty terminal | Launch your primary terminal emulator |
+| `Alt+e` | Open Thunar file manager | Access your file system with ease |
+| `Alt+Space` | Launch Rofi application menu | Quick application launcher |
 
+![Preview](preview/1.png)
 
-```Alt+j``` or ```Alt+Left``` → Left
+### Media Controls
 
-```Alt+k``` or ```Alt+Down``` → Down
+| Shortcut | Action | Preview |
+|----------|--------|---------|
+| `Alt+c` | Run MPV control menu | ![Preview](preview/2.png) |
+| `Alt+x` | Run MPV select music | ![Preview](preview/3.png) |
 
-```Alt+l``` or ```Alt+Up``` → Up
+### Window Management
 
-```Alt+;``` or ```Alt+Right``` → Right
+| Shortcut | Action |
+|----------|--------|
+| `Alt+q` | Close focused window |
 
-### Layouts and Splits
+---
 
-```Alt+h``` → Split window horizontally.
+## 🧭 Window Focus
 
-```Alt+v``` → Split window vertically.
+Navigate between windows with intuitive key combinations:
 
-```Alt+f``` → Toggle fullscreen mode.
+### Directional Movement
 
-```Alt+w``` → Switch to tabbed layout.
+| Direction | Primary Shortcut | Alternative |
+|-----------|------------------|-------------|
+| **Left** | `Alt+j` | `Alt+Left` |
+| **Down** | `Alt+k` | `Alt+Down` |
+| **Up** | `Alt+l` | `Alt+Up` |
+| **Right** | `Alt+;` | `Alt+Right` |
 
-```Alt+s``` → Toggle between split and stacking layouts.
+---
 
-```Alt+Shift+Space``` → Toggle floating mode for the focused window.
+## 🎨 Layouts and Splits
 
-```Alt+Shift+t``` → Toggle focus mode (tree/tiling).
+Master your workspace organization:
 
+### Window Splitting
+- `Alt+h` → **Split window horizontally**
+- `Alt+v` → **Split window vertically**
+
+### Layout Management
+- `Alt+f` → **Toggle fullscreen mode**
+- `Alt+w` → **Switch to tabbed layout**
+- `Alt+s` → **Toggle between split and stacking layouts**
+
+### Advanced Controls
+- `Alt+Shift+Space` → **Toggle floating mode** for the focused window
+- `Alt+Shift+t` → **Toggle focus mode** (tree/tiling)
+- `Alt+a` → **Focus parent container** in layout hierarchy
+
+---
+
+## ⚙️ Reload & Restart i3
+
+Keep your configuration up-to-date:
+
+| Shortcut | Action | Purpose |
+|----------|--------|---------|
+| `Alt+Shift+z` | Reload i3 configuration | Apply changes without restart |
+| `Alt+Shift+r` | Restart i3 | Full restart without logging out |
+
+---
+
+*Crafted with ❤️ for productivity and aesthetics*
 ```Alt+a``` → Focus parent container in layout hierarchy.
 
 ### Reload & Restart i3

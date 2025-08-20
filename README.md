@@ -34,8 +34,7 @@ The `$mod` key is configured as **Mod1** (Alt key)
 
 </div>
 
-> **Note:** This key serves as the primary modifier for all window management operations and shortcuts.
-
+> **Note:** Also you can you **Mod2** (Windows key)
 ---
 
 ## 🚀 Application Shortcuts

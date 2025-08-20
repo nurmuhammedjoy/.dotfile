@@ -94,8 +94,3 @@ Keep your configuration up-to-date:
 *Crafted with ❤️ for productivity and aesthetics*
 ```Alt+a``` → Focus parent container in layout hierarchy.
 
-### Reload & Restart i3
-
-```Alt+Shift+z``` → Reload i3 configuration (apply changes).
-
-```Alt+Shift+r``` → Restart i3 without logging out.

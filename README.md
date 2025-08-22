@@ -20,8 +20,6 @@ Before using these dotfiles on Termux, install the required packages:
 
 ```bash
 pkg update && pkg upgrade
-pkg install apt bash coreutils dpkg dash file findutils gpgv grep less ncurses ncurses-utils net-tools openssl procps sed tar termux-tools termux-core tzdata util-linux wget which zsh
-termux-api
  ```
 
 ## 📖 Configuration Documentation

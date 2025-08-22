@@ -51,7 +51,7 @@ The `$mod` key is configured as **Mod1** (Alt key)
 
 <div align="center">
 
-![Preview](preview/1.png)
+
 
 </div>
 

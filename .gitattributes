@@ -1,0 +1,5 @@
+# Excluded from GitHub language statistics.
+# These are theming/config assets (Gruvbox GTK theme, rofi/polybar styles),
+# not the codebase — Linguist would otherwise report CSS as 99% of this repo.
+*.css linguist-vendored
+*.scss linguist-vendored

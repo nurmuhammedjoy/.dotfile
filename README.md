@@ -4,7 +4,7 @@
 
 <div align="center">
 
-A carefully crafted collection of configuration files featuring window manager, terminal, themes, polybar with custom modules for Termux and music player integration.
+A carefully crafted collection of configuration files featuring window manager, terminal, themes, and polybar with custom modules for Termux.
 
 ![Preview](preview/1.png)
 
@@ -46,23 +46,6 @@ The `$mod` key is configured as **Mod1** (Alt key)
 | `Alt+Return` | Open Kitty terminal | Launch your primary terminal emulator |
 | `Alt+e` | Open Thunar file manager | Access your file system with ease |
 | `Alt+Space` | Launch Rofi application menu | Quick application launcher |
-
-</div>
-
-<div align="center">
-
-
-
-</div>
-
-### Media Controls
-
-<div style="overflow-x: auto;">
-
-| Shortcut | Action | Preview |
-|----------|--------|---------|
-| `Alt+c` | Run MPV control menu | ![Preview](preview/2.png) |
-| `Alt+x` | Run MPV select music | ![Preview](preview/3.png) |
 
 </div>
 

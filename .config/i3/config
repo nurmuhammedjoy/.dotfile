@@ -32,8 +32,6 @@ floating_modifier $mod
 bindsym $mod+Return exec kitty
 bindsym $mod+e exec thunar
 bindsym $mod+space exec rofi -modi drun -show drun
-bindsym $mod+c exec ./.config/mpv/mpv-rofi-control.sh 
-bindsym $mod+x exec ./.config/mpv/mpv-rofi-music.sh
 bindsym $mod+q kill
 
 

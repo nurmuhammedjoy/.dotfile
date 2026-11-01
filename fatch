@@ -1,46 +1,80 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# fatch - compact system info for Termux + i3
 
-IMAGE_PATH="$HOME/file.png"
+set -uo pipefail
 
-# Gruvbox
-fg="\033[38;2;235;219;178m"
-yellow="\033[38;2;250;189;47m"
-reset="\033[0m"
+IMAGE_PATH="${FATCH_IMAGE:-$HOME/file.png}"
 
-info_lines=(
-    "${yellow}${reset}  ${fg}${reset}"
-    "${yellow}OS${reset}  ${fg}Android 13${reset}"
-    "${yellow}KER${reset} ${fg}Linux 4.14.18${reset}"
-    "${yellow}PKG${reset} ${fg}425 (dpkg)${reset}"
-    "${yellow}SH${reset}  ${fg}zsh${reset}"
-    "${yellow}WM${reset}  ${fg}i3wm${reset}"
-)
+# Gruvbox palette
+fg=$'\033[38;2;235;219;178m'
+yellow=$'\033[38;2;250;189;47m'
+reset=$'\033[0m'
 
-PADDING=9
-
-show_image() {
-    if [[ -f "$IMAGE_PATH" ]]; then
-        # Place image and move cursor to align with text
-        kitty +kitten icat --transfer-mode file --place 11x11@0x0 "$IMAGE_PATH"
+detect_os() {
+    if command -v getprop >/dev/null 2>&1; then
+        local release
+        release=$(getprop ro.build.version.release 2>/dev/null)
+        printf 'Android %s' "${release:-unknown}"
+    else
+        uname -sr
     fi
 }
 
+detect_packages() {
+    if command -v dpkg-query >/dev/null 2>&1; then
+        local count
+        count=$(dpkg-query -f '.\n' -W 2>/dev/null | wc -l)
+        printf '%s (dpkg)' "${count// /}"
+    else
+        printf 'unknown'
+    fi
+}
+
+detect_shell() {
+    local shell_path=${SHELL:-/bin/bash}
+    printf '%s' "${shell_path##*/}"
+}
+
+detect_wm() {
+    if [[ -n ${XDG_CURRENT_DESKTOP:-} ]]; then
+        printf '%s' "$XDG_CURRENT_DESKTOP"
+    elif pgrep -x i3 >/dev/null 2>&1; then
+        printf 'i3wm'
+    else
+        printf 'unknown'
+    fi
+}
+
+show_image() {
+    [[ -f $IMAGE_PATH ]] || return 0
+    command -v kitty >/dev/null 2>&1 || return 0
+    kitty +kitten icat --transfer-mode file --place 11x11@0x0 "$IMAGE_PATH" 2>/dev/null || true
+}
+
 show_info() {
-    # Move cursor to position next to image
-    printf "\033[1;14H"  # Move to row 1, column 17
-    
-    for line in "${info_lines[@]}"; do
-        printf "%b\n\033[14G" "$line"  # Print line then move to column 17
+    local rows=(
+        "OS|$(detect_os)"
+        "KER|$(uname -r)"
+        "PKG|$(detect_packages)"
+        "SH|$(detect_shell)"
+        "WM|$(detect_wm)"
+    )
+
+    # Start next to the image
+    printf '\033[1;14H'
+
+    local row
+    for row in "${rows[@]}"; do
+        printf '%s%-3s%s %s%s%s\n\033[14G' \
+            "$yellow" "${row%%|*}" "$reset" "$fg" "${row#*|}" "$reset"
     done
 }
 
 main() {
     clear
-    
     show_image
     show_info
-
-    echo
+    printf '\n'
 }
 
-main
+main "$@"

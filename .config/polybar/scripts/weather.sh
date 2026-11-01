@@ -1,50 +1,49 @@
 #!/usr/bin/env bash
-# ~/.config/polybar/weather-nerd.sh
-# Usage:
-#   weather-nerd.sh [City] [--short]
-# Examples:
-#   weather-nerd.sh Dhaka
-#   weather-nerd.sh "New York" --short
+# Weather module for polybar (data from wttr.in)
 
-# Take all arguments until the last one as city (to support spaces)
-if [[ "$#" -gt 0 && "$*" != *"--short"* ]]; then
-  CITY="$*"
-else
-  CITY="Dhaka"
+set -uo pipefail
+
+CITY="Dhaka"
+SHORT=false
+ARGS=()
+
+for arg in "$@"; do
+    case "$arg" in
+        --short|-s) SHORT=true ;;
+        *) ARGS+=("$arg") ;;
+    esac
+done
+
+if (( ${#ARGS[@]} )); then
+    CITY="${ARGS[*]}"
 fi
 
-# Detect if short flag is passed
-SHORT=false
-[[ "$*" == *"--short"* ]] && SHORT=true
+RAW=$(curl -fsS --max-time 5 "https://wttr.in/${CITY// /+}?format=%C|%t" 2>/dev/null) || true
+[[ -n $RAW ]] || RAW="N/A|N/A"
 
-# Fetch weather
-RAW=$(curl -s "wttr.in/${CITY}?format=%C|%t" || echo "N/A|N/A")
+COND=${RAW%%|*}
+TEMP=${RAW#*|}
+COND=$(printf '%s' "$COND" | tr '[:upper:]' '[:lower:]' | xargs)
+TEMP=$(printf '%s' "$TEMP" | sed 's/+//' | xargs)
 
-COND=$(echo "$RAW" | cut -d'|' -f1 | tr '[:upper:]' '[:lower:]' | xargs)
-TEMP=$(echo "$RAW" | cut -d'|' -f2 | sed 's/+//' | xargs)
-
-# Default icon
-ICON=""
+ICON=$'\uf059'
 
 case "$COND" in
-*clear* | *sunny*) ICON="󰖐" ;;             # sun
-*partly* | *few* | *overcast*) ICON="" ;; # partly cloudy
-*cloud* | *clouds*) ICON="󰅣" ;;            # clouds
-*rain* | *drizzle* | *shower*) ICON="" ;; # rain
-*thunder* | *storm*) ICON="" ;;           # thunderstorm
-*snow* | *sleet*) ICON="" ;;              # snow
-*mist* | *fog* | *haze*) ICON="" ;;       # fog
-*night* | *moon*) ICON="" ;;              # moon
-*) ICON="" ;;
+    *clear*|*sunny*)                 ICON=$'\U000f0590' ;;   # sun
+    *partly*|*few*|*overcast*)       ICON=$'\ue301'     ;;   # partly cloudy
+    *cloud*|*clouds*)                ICON=$'\U000f0163' ;;   # clouds
+    *rain*|*drizzle*|*shower*)       ICON=$'\ue308'     ;;   # rain
+    *thunder*|*storm*)               ICON=$'\ue30f'     ;;   # thunderstorm
+    *snow*|*sleet*)                  ICON=$'\ue30a'     ;;   # snow
+    *mist*|*fog*|*haze*)             ICON=$'\ue313'     ;;   # fog
+    *night*|*moon*)                  ICON=$'\uf186'     ;;   # moon
 esac
 
-# Fallbacks
-[[ "$TEMP" == "N/A" ]] && TEMP="--°C"
-[[ "$RAW" == "N/A|N/A" ]] && CITY="Unknown"
+[[ $TEMP == "N/A" || -z $TEMP ]] && TEMP="--°C"
+[[ $RAW == "N/A|N/A" ]] && CITY="Unknown"
 
-# Output
-if $SHORT; then
-  printf '%s %s\n' "$ICON" "$TEMP"
+if [[ $SHORT == true ]]; then
+    printf '%s %s\n' "$ICON" "$TEMP"
 else
-  printf '%s %s %s\n' "$ICON" " $CITY" "$TEMP"
+    printf '%s %s %s\n' "$ICON" "$CITY" "$TEMP"
 fi

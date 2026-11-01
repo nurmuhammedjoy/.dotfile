@@ -1,17 +1,22 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
+# Volume module for polybar on Termux
 
-vol=$(termux-volume | grep '"music"' -A2 | grep '"volume"' | awk -F ': ' '{print $2}' | tr -d ', ')
+info=$(termux-volume 2>/dev/null) || exit 0
 
-# If empty, default to 0
-[ -z "$vol" ] && vol=0
-
-# Pick icon by volume
-if [ "$vol" -eq 0 ]; then
-    icon=" "   # muted
-elif [ "$vol" -le 30 ]; then
-    icon=" "   # low
+if command -v jq >/dev/null 2>&1; then
+    vol=$(jq -r '.[] | select(.stream == "music") | .volume' <<<"$info" | head -n1)
 else
-    icon=" "   # high
+    vol=$(sed -n '/"music"/,/}/s/.*"volume": *\([0-9]*\).*/\1/p' <<<"$info" | head -n1)
 fi
 
-echo "$icon $vol%"
+[[ $vol =~ ^[0-9]+$ ]] || vol=0
+
+if (( vol == 0 )); then
+    icon=$'\uf026'                      # muted
+elif (( vol <= 30 )); then
+    icon=$'\uf027'                      # low
+else
+    icon=$'\uf028'                      # high
+fi
+
+printf '%s %s%%\n' "$icon" "$vol"

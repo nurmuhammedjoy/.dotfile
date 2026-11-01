@@ -1,20 +1,30 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
+# battery module for polybar on Termux
 
-# Get battery info
-capacity=$(termux-battery-status | grep 'percentage' | awk -F ': ' '{print $2}' | tr -d ', ')
-charging=$(termux-battery-status | grep 'charging' | awk -F ': ' '{print $2}' | tr -d ', ')
+status=$(termux-battery-status 2>/dev/null) || exit 0
 
-# Choose icon by capacity
-if [ "$charging" = "true" ]; then
-    icon=""   # charging
+if command -v jq >/dev/null 2>&1; then
+    capacity=$(jq -r '.percentage // empty' <<<"$status")
+    charging=$(jq -r '.charging // false' <<<"$status")
 else
-    if   [ "$capacity" -ge 90 ]; then icon=" "  # full
-    elif [ "$capacity" -ge 70 ]; then icon=" "  # 75%
-    elif [ "$capacity" -ge 50 ]; then icon=" "  # 50%
-    elif [ "$capacity" -ge 20 ]; then icon=" "  # 25%
-    else icon=""  # empty
-    fi
+    capacity=$(sed -n 's/.*"percentage": *\([0-9]*\).*/\1/p' <<<"$status")
+    charging=$(sed -n 's/.*"charging": *\([a-z]*\).*/\1/p' <<<"$status")
 fi
 
-# Output
-echo "$icon $capacity%"
+[[ $capacity =~ ^[0-9]+$ ]] || capacity=0
+
+if [[ $charging == true ]]; then
+    icon=$'\uf1e6'                      # charging
+elif (( capacity >= 90 )); then
+    icon=$'\uf240'                      # full
+elif (( capacity >= 70 )); then
+    icon=$'\uf241'                      # 75%
+elif (( capacity >= 50 )); then
+    icon=$'\uf242'                      # 50%
+elif (( capacity >= 20 )); then
+    icon=$'\uf243'                      # 25%
+else
+    icon=$'\uf244'                      # empty
+fi
+
+printf '%s %s%%\n' "$icon" "$capacity"

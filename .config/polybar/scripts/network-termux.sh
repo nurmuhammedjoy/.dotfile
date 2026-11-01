@@ -1,24 +1,30 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/usr/bin/env bash
+# Wi-Fi signal module for polybar on Termux
 
-info=$(termux-wifi-connectioninfo)
-rssi=$(echo "$info" | jq '.rssi')
+info=$(termux-wifi-connectioninfo 2>/dev/null) || exit 0
 
-# Convert RSSI to 0–100% (approximation)
-quality=$(( (rssi + 100) * 2 ))
-quality=$(( quality < 0 ? 0 : (quality > 100 ? 100 : quality) ))
-
-# Pick icon based on signal quality
-if [ "$quality" -ge 75 ]; then
-    icon="󰤨"   # strong
-elif [ "$quality" -ge 50 ]; then
-    icon="󰤥"   # medium
-elif [ "$quality" -ge 25 ]; then
-    icon="󰤟"   # weak
+if command -v jq >/dev/null 2>&1; then
+    rssi=$(jq -r '.rssi // empty' <<<"$info")
 else
-    icon="󰤮"   # very weak
+    rssi=$(sed -n 's/.*"rssi": *\(-\{0,1\}[0-9]*\).*/\1/p' <<<"$info")
 fi
 
-# Always display generic label
-ssid=" Joy"
+[[ $rssi =~ ^-?[0-9]+$ ]] || rssi=-100
 
-echo "$icon $ssid"
+# Map RSSI (-100..0 dBm) to 0..100%
+quality=$(( (rssi + 100) * 2 ))
+(( quality < 0 )) && quality=0
+(( quality > 100 )) && quality=100
+
+if (( quality >= 75 )); then
+    icon=$'\U000f0928'                  # strong
+elif (( quality >= 50 )); then
+    icon=$'\U000f0925'                  # medium
+elif (( quality >= 25 )); then
+    icon=$'\U000f091f'                  # weak
+else
+    icon=$'\U000f092e'                  # very weak
+fi
+
+# Always display a generic label
+printf '%s %s\n' "$icon" "${NETWORK_LABEL:-Joy}"

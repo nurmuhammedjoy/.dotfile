@@ -1,3 +1,0 @@
-/data/data/com.termux/files/home/music/Ei Obelay.mp3
-/data/data/com.termux/files/home/music/Master Of Puppets (Remastered).mp3
-/data/data/com.termux/files/home/music/Odhikar.mp3
